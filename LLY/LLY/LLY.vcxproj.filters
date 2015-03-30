@@ -1,0 +1,386 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="util">
+      <UniqueIdentifier>{a1a9c3e9-f86e-4da0-a11a-db8212d330b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="render">
+      <UniqueIdentifier>{97a322af-370f-486a-b267-b7efa8533393}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="test">
+      <UniqueIdentifier>{d7b3d75c-8029-42b1-b1f1-869ae68741be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource">
+      <UniqueIdentifier>{7d267518-260b-412e-a7d2-b5057f108bc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene">
+      <UniqueIdentifier>{937b86f3-71fc-4cc4-b4cb-fba4fb8e9df9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="math">
+      <UniqueIdentifier>{0cc77679-6e0b-4c21-a9e7-685f94f5caa1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource\material">
+      <UniqueIdentifier>{5b97db00-0bc4-40e5-86c0-6ed2b2d15dcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource\skeleton">
+      <UniqueIdentifier>{b9b2f003-083e-4b5c-9f64-0e0973086a07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource\loader">
+      <UniqueIdentifier>{1b147104-4f1e-41df-acce-c5811b173ee8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="System.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\Image.cpp">
+      <Filter>resource</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\Program.cpp">
+      <Filter>resource</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\VertexBuffer.cpp">
+      <Filter>resource</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\VertexDescription.cpp">
+      <Filter>resource</Filter>
+    </ClCompile>
+    <ClCompile Include="render\Device.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="render\RenderCommand.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="render\RenderCommandGroup.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="render\RenderTarget.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="util\FileUtil.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\Texture2D.cpp">
+      <Filter>resource</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\Texture3D.cpp">
+      <Filter>resource</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\TextureCube.cpp">
+      <Filter>resource</Filter>
+    </ClCompile>
+    <ClCompile Include="util\FuncUnitl.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\Scene.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\GameObject.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\Camera.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\SceneManager.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="math\MathUtil.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="math\Matrix.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="math\Transform.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="math\Vector2.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="math\Vector3.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="math\Vector4.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="util\CommonUtil.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="math\Quaternion.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\material\RenderState.cpp">
+      <Filter>resource\material</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\RenderBuffer.cpp">
+      <Filter>resource</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\material\Technique.cpp">
+      <Filter>resource\material</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\material\Pass.cpp">
+      <Filter>resource\material</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\material\Material.cpp">
+      <Filter>resource\material</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\material\Uniform.cpp">
+      <Filter>resource\material</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\material\RenderOption.cpp">
+      <Filter>resource\material</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\MeshPart.cpp">
+      <Filter>resource</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\material\MaterialLoader.cpp">
+      <Filter>resource\material</Filter>
+    </ClCompile>
+    <ClCompile Include="util\StringTable.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\ResourceManager.cpp">
+      <Filter>resource</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\Resource.cpp">
+      <Filter>resource</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\Mesh.cpp">
+      <Filter>resource</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\animation.cpp">
+      <Filter>resource</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\bone_data.cpp">
+      <Filter>resource</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\key_frame.cpp">
+      <Filter>resource</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\skeleton_data.cpp">
+      <Filter>resource</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\track.cpp">
+      <Filter>resource</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\node.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\bone.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\skeleton.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\Entity.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\loader\FbxLoader.cpp">
+      <Filter>resource\loader</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\IndexBuffer.cpp">
+      <Filter>resource</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\AnimationState.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="System.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\Image.h">
+      <Filter>resource</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\Program.h">
+      <Filter>resource</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\VertexBuffer.h">
+      <Filter>resource</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\VertexDescription.h">
+      <Filter>resource</Filter>
+    </ClInclude>
+    <ClInclude Include="render\Device.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="render\RenderCommand.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="render\RenderCommandGroup.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="render\RenderTarget.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="util\FileUtil.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="util\LLYIncludes.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\Defines.h">
+      <Filter>resource</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\Texture2D.h">
+      <Filter>resource</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\Texture3D.h">
+      <Filter>resource</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\TextureCube.h">
+      <Filter>resource</Filter>
+    </ClInclude>
+    <ClInclude Include="util\FuncUnitl.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\Scene.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\GameObject.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\Camera.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\SceneManager.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="math\MathUtil.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Matrix.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Transform.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Vector2.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Vector3.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Vector4.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="util\Macros.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="util\CommonUtil.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Quaternion.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\material\RenderState.h">
+      <Filter>resource\material</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\RenderBuffer.h">
+      <Filter>resource</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\material\Technique.h">
+      <Filter>resource\material</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\material\Pass.h">
+      <Filter>resource\material</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\material\Material.h">
+      <Filter>resource\material</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\material\Uniform.h">
+      <Filter>resource\material</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\material\RenderOption.h">
+      <Filter>resource\material</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\MeshPart.h">
+      <Filter>resource</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\material\MaterialLoader.h">
+      <Filter>resource\material</Filter>
+    </ClInclude>
+    <ClInclude Include="util\StringTable.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\ResourceManager.h">
+      <Filter>resource</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\Resource.h">
+      <Filter>resource</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\Mesh.h">
+      <Filter>resource</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\animation.h">
+      <Filter>resource</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\bone_data.h">
+      <Filter>resource</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\key_frame.h">
+      <Filter>resource</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\skeleton_data.h">
+      <Filter>resource</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\track.h">
+      <Filter>resource</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\node.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\bone.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\skeleton.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\Entity.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\loader\FbxLoader.h">
+      <Filter>resource\loader</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\IndexBuffer.h">
+      <Filter>resource</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\AnimationState.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="math\MathUtil.inl">
+      <Filter>math</Filter>
+    </None>
+    <None Include="math\Matrix.inl">
+      <Filter>math</Filter>
+    </None>
+    <None Include="math\Vector2.inl">
+      <Filter>math</Filter>
+    </None>
+    <None Include="math\Vector3.inl">
+      <Filter>math</Filter>
+    </None>
+    <None Include="math\Vector4.inl">
+      <Filter>math</Filter>
+    </None>
+    <None Include="math\Quaternion.inl">
+      <Filter>math</Filter>
+    </None>
+  </ItemGroup>
+</Project>

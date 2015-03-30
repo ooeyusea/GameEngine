@@ -1,0 +1,208 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B6FD4270-2A0A-44AF-90B5-990429459D1A}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>LLY</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>../external/png/include;../external/glfw/include;../external/glew/include;../external/zlib/include;../external;$(IncludePath)</IncludePath>
+    <LibraryPath>../external/png/lib;../external/glfw/lib;../external/glew/lib;../external/zlib/lib;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>../external/glfw/bin;../external/glew/bin;../external/zlib/bin;$(ExecutablePath)</ExecutablePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_USE_MATH_DEFINES;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Program Files\Autodesk\FBX\FBX SDK\2015.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32.lib;libpng.lib;libzlib.lib;libfbxsdk-md.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <AdditionalLibraryDirectories>C:\Program Files\Autodesk\FBX\FBX SDK\2015.1\lib\vs2013\x86\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_USE_MATH_DEFINES;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="math\MathUtil.cpp" />
+    <ClCompile Include="math\Matrix.cpp" />
+    <ClCompile Include="math\Quaternion.cpp" />
+    <ClCompile Include="math\Transform.cpp" />
+    <ClCompile Include="math\Vector2.cpp" />
+    <ClCompile Include="math\Vector3.cpp" />
+    <ClCompile Include="math\Vector4.cpp" />
+    <ClCompile Include="render\Device.cpp" />
+    <ClCompile Include="render\RenderCommand.cpp" />
+    <ClCompile Include="render\RenderCommandGroup.cpp" />
+    <ClCompile Include="render\RenderTarget.cpp" />
+    <ClCompile Include="resource\animation.cpp" />
+    <ClCompile Include="resource\bone_data.cpp" />
+    <ClCompile Include="resource\Image.cpp" />
+    <ClCompile Include="resource\IndexBuffer.cpp" />
+    <ClCompile Include="resource\key_frame.cpp" />
+    <ClCompile Include="resource\loader\FbxLoader.cpp" />
+    <ClCompile Include="resource\material\Material.cpp" />
+    <ClCompile Include="resource\material\MaterialLoader.cpp" />
+    <ClCompile Include="resource\material\Pass.cpp" />
+    <ClCompile Include="resource\material\RenderOption.cpp" />
+    <ClCompile Include="resource\material\RenderState.cpp" />
+    <ClCompile Include="resource\material\Technique.cpp" />
+    <ClCompile Include="resource\material\Uniform.cpp" />
+    <ClCompile Include="resource\Mesh.cpp" />
+    <ClCompile Include="resource\MeshPart.cpp" />
+    <ClCompile Include="resource\Program.cpp" />
+    <ClCompile Include="resource\RenderBuffer.cpp" />
+    <ClCompile Include="resource\Resource.cpp" />
+    <ClCompile Include="resource\ResourceManager.cpp" />
+    <ClCompile Include="resource\skeleton_data.cpp" />
+    <ClCompile Include="resource\Texture2D.cpp" />
+    <ClCompile Include="resource\Texture3D.cpp" />
+    <ClCompile Include="resource\TextureCube.cpp" />
+    <ClCompile Include="resource\track.cpp" />
+    <ClCompile Include="resource\VertexBuffer.cpp" />
+    <ClCompile Include="resource\VertexDescription.cpp" />
+    <ClCompile Include="scene\AnimationState.cpp" />
+    <ClCompile Include="scene\bone.cpp" />
+    <ClCompile Include="scene\Camera.cpp" />
+    <ClCompile Include="scene\Entity.cpp" />
+    <ClCompile Include="scene\GameObject.cpp" />
+    <ClCompile Include="scene\node.cpp" />
+    <ClCompile Include="scene\Scene.cpp" />
+    <ClCompile Include="scene\SceneManager.cpp" />
+    <ClCompile Include="scene\skeleton.cpp" />
+    <ClCompile Include="System.cpp" />
+    <ClCompile Include="util\CommonUtil.cpp" />
+    <ClCompile Include="util\FileUtil.cpp" />
+    <ClCompile Include="util\FuncUnitl.cpp" />
+    <ClCompile Include="util\StringTable.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="math\MathUtil.h" />
+    <ClInclude Include="math\Matrix.h" />
+    <ClInclude Include="math\Quaternion.h" />
+    <ClInclude Include="math\Transform.h" />
+    <ClInclude Include="math\Vector2.h" />
+    <ClInclude Include="math\Vector3.h" />
+    <ClInclude Include="math\Vector4.h" />
+    <ClInclude Include="render\Device.h" />
+    <ClInclude Include="render\RenderCommand.h" />
+    <ClInclude Include="render\RenderCommandGroup.h" />
+    <ClInclude Include="render\RenderTarget.h" />
+    <ClInclude Include="resource\animation.h" />
+    <ClInclude Include="resource\bone_data.h" />
+    <ClInclude Include="resource\Defines.h" />
+    <ClInclude Include="resource\Image.h" />
+    <ClInclude Include="resource\IndexBuffer.h" />
+    <ClInclude Include="resource\key_frame.h" />
+    <ClInclude Include="resource\loader\FbxLoader.h" />
+    <ClInclude Include="resource\material\Material.h" />
+    <ClInclude Include="resource\material\MaterialLoader.h" />
+    <ClInclude Include="resource\material\Pass.h" />
+    <ClInclude Include="resource\material\RenderOption.h" />
+    <ClInclude Include="resource\material\RenderState.h" />
+    <ClInclude Include="resource\material\Technique.h" />
+    <ClInclude Include="resource\material\Uniform.h" />
+    <ClInclude Include="resource\Mesh.h" />
+    <ClInclude Include="resource\MeshPart.h" />
+    <ClInclude Include="resource\Program.h" />
+    <ClInclude Include="resource\RenderBuffer.h" />
+    <ClInclude Include="resource\Resource.h" />
+    <ClInclude Include="resource\ResourceManager.h" />
+    <ClInclude Include="resource\skeleton_data.h" />
+    <ClInclude Include="resource\Texture2D.h" />
+    <ClInclude Include="resource\Texture3D.h" />
+    <ClInclude Include="resource\TextureCube.h" />
+    <ClInclude Include="resource\track.h" />
+    <ClInclude Include="resource\VertexBuffer.h" />
+    <ClInclude Include="resource\VertexDescription.h" />
+    <ClInclude Include="scene\AnimationState.h" />
+    <ClInclude Include="scene\bone.h" />
+    <ClInclude Include="scene\Camera.h" />
+    <ClInclude Include="scene\Entity.h" />
+    <ClInclude Include="scene\GameObject.h" />
+    <ClInclude Include="scene\node.h" />
+    <ClInclude Include="scene\Scene.h" />
+    <ClInclude Include="scene\SceneManager.h" />
+    <ClInclude Include="scene\skeleton.h" />
+    <ClInclude Include="System.h" />
+    <ClInclude Include="util\CommonUtil.h" />
+    <ClInclude Include="util\FileUtil.h" />
+    <ClInclude Include="util\FuncUnitl.h" />
+    <ClInclude Include="util\LLYIncludes.h" />
+    <ClInclude Include="util\Macros.h" />
+    <ClInclude Include="util\StringTable.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="math\MathUtil.inl" />
+    <None Include="math\Matrix.inl" />
+    <None Include="math\Quaternion.inl" />
+    <None Include="math\Vector2.inl" />
+    <None Include="math\Vector3.inl" />
+    <None Include="math\Vector4.inl" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

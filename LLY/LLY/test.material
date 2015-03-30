@@ -1,0 +1,24 @@
+material test {
+	technique default {
+		pass {
+			vertex test.vsh
+			fragment test.fsh
+			geometry test.gsh
+			
+			/*renderstate {
+				cull_face on
+			}*/
+
+			u_matrix = MATRIX_PALETTE
+			u_projection = PROJECTION_MATRIX
+			u_view = VIEW_MATRIX
+			u_model = MODEL_MATRIX
+					   
+			u_color = 1.0, 1.0, 1.0, 1.0
+			
+			sampler_2d u_tex {
+				path test.png
+			}
+		}
+	}
+}
