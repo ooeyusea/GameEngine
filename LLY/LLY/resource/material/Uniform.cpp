@@ -400,6 +400,7 @@ namespace lly {
 
 	void Uniform::merge(const Uniform& rhs)
 	{
+		_name = rhs._name;
 		if (_type == ValueType::NONE)
 		{
 			switch (rhs._type)

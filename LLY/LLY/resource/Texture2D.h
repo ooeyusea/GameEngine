@@ -27,6 +27,7 @@ namespace lly {
 		bool load_from_data(unsigned char* data, int width, int height, bool mipmap, ColorFormat format, TextureWrap s, TextureWrap t, TextureMinFilter filter, TextureMagFilter mip_filter);
 
 	private:
+		std::string _name;
 		GLuint _tex;
 
 		ColorFormat _format;

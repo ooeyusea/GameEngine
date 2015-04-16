@@ -29,6 +29,8 @@ namespace lly {
 		void draw(MeshPart& obj);
 
 		void merge_render_option(const RenderOption& option);
+
+		Technique * clone();
 	private:
 		int _id;
 		std::string _name;

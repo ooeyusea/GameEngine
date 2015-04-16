@@ -684,6 +684,7 @@ namespace lly
 				else
 				{
 					Uniform uniform = load_uniform(words);
+					uniform.set_name(to_var(tmp));
 					ret->add_uniform(uniform);
 				}
 			}
@@ -726,15 +727,21 @@ namespace lly
 					RenderState state = load_render_state(words);
 					ret->set_render_state(state);
 				}
+				else if (tmp == "template")
+				{
+					ret->set_template(true);
+				}
 				else if (tmp == "}")
 				{
 					deletor.no();
-					ret->merge_render_option();
+					if (!ret->is_template())
+						ret->merge_render_option();
 					return ret;
 				}
 				else
 				{
 					Uniform uniform = load_uniform(words);
+					uniform.set_name(to_var(tmp));
 					ret->add_uniform(uniform);
 				}
 			}

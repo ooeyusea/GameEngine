@@ -15,11 +15,12 @@
 #include "../track.h"
 #include "../key_frame.h"
 #include "../animation.h"
+#include "../material/Material.h"
 
 #undef max
 #undef min
 
-#define MAX_BONES 12
+#define MAX_BONES 50
 
 namespace loader {
 	int cal_add_bone_to_set_cost(std::vector<int>& bone_set,
@@ -262,32 +263,19 @@ namespace loader {
 		data[offset++] = (float)color.mAlpha;
 	}
 
-	inline void read_uv(FbxMesh * mesh, float * data, int& offset, int uv_index, int index, int v, bool filp)
+	inline void read_uv(FbxMesh * mesh, float * data, int& offset, int poly_index, int poly_inside_index, bool filp)
 	{
-
-		auto uvs = ((FbxLayerElementArray*)&(mesh->GetElementUV(uv_index)->GetDirectArray()));
+		FbxStringList uv_names;
+		mesh->GetUVSetNames(uv_names);
+		
 		FbxVector2 uv;
-		if (mesh->GetElementUV(uv_index)->GetMappingMode() == FbxGeometryElement::eByControlPoint)
+		if (uv_names.GetCount() > 0)
 		{
-			if (mesh->GetElementUV(uv_index)->GetReferenceMode() == FbxGeometryElement::eIndexToDirect)
-			{
-				uvs->GetAt<FbxVector2>(mesh->GetElementUV(uv_index)->GetIndexArray().GetAt(v), &uv);
-			}
-			else
-			{
-				uvs->GetAt<FbxVector2>(v, &uv);
-			}
-		}
-		else
-		{
-			if (mesh->GetElementUV(uv_index)->GetReferenceMode() == FbxGeometryElement::eIndexToDirect)
-			{
-				uvs->GetAt<FbxVector2>(mesh->GetElementUV(uv_index)->GetIndexArray().GetAt(index), &uv);
-			}
-			else
-			{
-				uvs->GetAt<FbxVector2>(index, &uv);
-			}
+			const char * uv_name = nullptr;
+			uv_name = uv_names[0];
+
+			bool mapped = false;
+			mesh->GetPolygonVertexUV(poly_index, poly_inside_index, uv_name, uv, mapped);
 		}
 
 		if (filp)
@@ -363,6 +351,7 @@ namespace loader {
 
 		setup(scene->GetRootNode());
 		cal_vertex_size();
+		read_material(scene);
 
 		travel(scene->GetRootNode());
 		construct_skeleton(scene->GetRootNode());
@@ -373,8 +362,109 @@ namespace loader {
 		return true;
 	}
 
+	std::unordered_map<std::string, unsigned int> FbxLoader::convert_materials()
+	{
+		auto mesh_material = lly::System::instance().get_resource_manager().load_material("test.material");
+		std::unordered_map<std::string, unsigned int> materials;
+		for (auto& unit : _materials)
+		{
+			auto tuple = lly::System::instance().get_resource_manager().clone_material(mesh_material, unit.second.name);
+			materials[unit.second.name] = std::get<0>(tuple);
+
+			auto material = std::get<1>(tuple);
+			material->set_name(unit.second.name);
+
+			if (unit.second.ambient.valid)
+			{
+				lly::Uniform ambient;
+				ambient.set_name("u_ambient");
+				ambient.set_value(unit.second.ambient.value.x, unit.second.ambient.value.y, unit.second.ambient.value.z, unit.second.ambient.value.w);
+
+				material->add_uniform(ambient);
+			}
+
+			if (unit.second.diffuse.valid)
+			{
+				lly::Uniform diffuse;
+				diffuse.set_name("u_diffuse");
+				diffuse.set_value(unit.second.diffuse.value.x, unit.second.diffuse.value.y, unit.second.diffuse.value.z, unit.second.diffuse.value.w);
+
+				material->add_uniform(diffuse);
+			}
+
+			if (unit.second.emissive.valid)
+			{
+				lly::Uniform emissive;
+				emissive.set_name("u_emissive");
+				emissive.set_value(unit.second.emissive.value.x, unit.second.emissive.value.y, unit.second.emissive.value.z, unit.second.emissive.value.w);
+
+				material->add_uniform(emissive);
+			}
+
+			if (unit.second.specular.valid)
+			{
+				lly::Uniform specular;
+				specular.set_name("u_specular");
+				specular.set_value(unit.second.specular.value.x, unit.second.specular.value.y, unit.second.specular.value.z, unit.second.specular.value.w);
+
+				material->add_uniform(specular);
+			}
+
+			if (unit.second.shininess.valid)
+			{
+				lly::Uniform shininess;
+				shininess.set_name("u_shininess");
+				shininess.set_value(unit.second.shininess.value);
+
+				material->add_uniform(shininess);
+			}
+
+			if (unit.second.opacity.valid)
+			{
+				lly::Uniform opacity;
+				opacity.set_name("u_opacity");
+				opacity.set_value(unit.second.opacity.value);
+
+				material->add_uniform(opacity);
+			}
+
+			for (auto& tex : unit.second.textures)
+			{
+				auto tex_id = lly::System::instance().get_resource_manager().load_texture_2d(tex.path);
+
+				lly::Uniform texture;
+				unsigned int mask = 0;
+				unsigned int id = 0;
+				bool mipmap = false;
+				lly::TextureWrap s = lly::TextureWrap::CLAMP;
+				lly::TextureWrap t = lly::TextureWrap::CLAMP;
+				lly::TextureMinFilter min_filter = lly::TextureMinFilter::NEAREST;
+				lly::TextureMagFilter mag_filter = lly::TextureMagFilter::NEAREST;
+
+				texture.set_value(tex_id, mipmap, s, t, min_filter, mag_filter, mask);
+
+				switch (tex.usage)
+				{
+				case Material::Texture::Usage::Diffuse: texture.set_name("u_diffuse_tex"); break;
+				case Material::Texture::Usage::Emissive: texture.set_name("u_emissive_tex"); break;
+				case Material::Texture::Usage::Specular: texture.set_name("u_specular_tex"); break;
+				case Material::Texture::Usage::Shininess: texture.set_name("u_shininess_tex"); break;
+				case Material::Texture::Usage::Normal: texture.set_name("u_normal_tex"); break;
+				}
+
+				material->set_uniform(texture);
+			}
+			material->merge_render_option();
+			material->set_current_tech("default");
+		}
+
+		return std::move(materials);
+	}
+
 	lly::Mesh * FbxLoader::convert_to_resource()
 	{
+		auto materials = convert_materials();
+
 		lly::Mesh * ret = new lly::Mesh();
 		lly::VertexBuffer * vb = new lly::VertexBuffer;
 		vb->load_data((const char*)_vertices.data(), _vertices.size() * sizeof(float), lly::VertexUsage::STATIC_DRAW);
@@ -397,6 +487,7 @@ namespace loader {
 			ib->gen(vb, desc);
 
 			mesh_part->set_index_buffer(ib);
+			mesh_part->set_material(materials[part.material]);
 
 			if (!part.bones.empty())
 			{
@@ -459,6 +550,9 @@ namespace loader {
 			_vertex_format |= Attribute::COLOR;
 		if (mesh->GetElementTangentCount() > 0)
 			_vertex_format |= Attribute::TANGENT;
+
+		if (mesh->GetElementUVCount() > 1)
+			throw std::logic_error("can not load fbx with multi uvs");
 
 		for (int i = 0; i < 8; ++i)
 		{
@@ -585,6 +679,8 @@ namespace loader {
 		std::vector<std::vector<MeshPart>> parts(node->GetMaterialCount());
 		for (int i = 0; i < node->GetMaterialCount(); ++i)
 		{
+			auto material = _materials[node->GetMaterial(i)];
+
 			int n = info.part_bones[i].size();
 			int m = (n == 0 ? 1 : n);
 			parts[i].resize(m);
@@ -599,6 +695,8 @@ namespace loader {
 					p.mData[2][0], p.mData[2][1], p.mData[2][2], p.mData[2][3],
 					p.mData[3][0], p.mData[3][1], p.mData[3][2], p.mData[3][3]
 				);
+
+				parts[i][j].material = material.name;
 
 				if (j < n)
 				{
@@ -647,7 +745,7 @@ namespace loader {
 			for (int j = 0; j < 3; ++j) 
 			{
 				auto v = mesh->GetPolygonVertex(i, j);
-				read_vertex(node, vertex, i, index, v);
+				read_vertex(node, vertex, i, index, v, j);
 
 				part.indices.push_back(add_vertex(part, vertex));
 				++index;
@@ -692,7 +790,7 @@ namespace loader {
 		}
 	}
 
-	void FbxLoader::read_vertex(FbxNode * node, float * vertex, int poly_index, int index, int v)
+	void FbxLoader::read_vertex(FbxNode * node, float * vertex, int poly_index, int index, int v, int poly_inside_index)
 	{
 		int offset = 0;
 		FbxMesh * mesh = node->GetMesh();
@@ -710,7 +808,7 @@ namespace loader {
 		for (int i = 0; i < 8; ++i)
 		{
 			if ((_vertex_format & (TEXCOOD0 << i)) > 0)
-				read_uv(mesh, vertex, offset, i, index, v, true);
+				read_uv(mesh, vertex, offset, poly_index, poly_inside_index, false);
 		}
 
 		for (int i = 0; i < 8; ++i)
@@ -722,7 +820,7 @@ namespace loader {
 
 	int FbxLoader::add_vertex(MeshPart& part, float * vertex)
 	{
-		for (int i = 0; i < _vertex_count; ++i)
+		/*for (int i = 0; i < _vertex_count; ++i)
 		{
 			bool same = true;
 			for (int j = 0; j < _vertex_size; ++j)
@@ -735,7 +833,7 @@ namespace loader {
 			}
 			if (same)
 				return i;
-		}
+		}*/
 
 		for (int j = 0; j < _vertex_size; ++j)
 		{
@@ -935,7 +1033,7 @@ namespace loader {
 						if (node) 
 						{
 							FbxString prop_name = prop.GetName();
-							if (prop_name == "DeformPercent")
+							if (prop_name == "DeformPercent" || prop_name == "Camera Index")
 								continue;
 
 							// Only add translation, scaling or rotation
@@ -983,6 +1081,7 @@ namespace loader {
 				float step_size = itr->second.framerate <= 0.f ? itr->second.stop - itr->second.start : 1000.f / itr->second.framerate;
 				float last = itr->second.stop + step_size * 0.5f;
 
+				int count = 0;
 				for (float time = itr->second.start; time <= last; time += step_size)
 				{
 					time = std::min(time, itr->second.stop);
@@ -990,7 +1089,7 @@ namespace loader {
 					FbxTime fbx_time;
 					fbx_time.SetMilliSeconds((FbxLongLong)time);
 
-					lly::TransformFrame * frame = new lly::TransformFrame(time - start);
+					lly::TransformFrame * frame = new lly::TransformFrame((time - start) / 1000.0f);
 
 					auto m = itr->first->EvaluateLocalTransform(fbx_time);
 					frame->set_position(glm::vec3(m.GetT().mData[0], m.GetT().mData[1], m.GetT().mData[2]));
@@ -998,10 +1097,97 @@ namespace loader {
 					frame->set_scale(glm::vec3(m.GetS().mData[0], m.GetS().mData[1], m.GetS().mData[2]));
 
 					track->add_key_frame(frame);
+
+					++count;
 				}
 
-				animation->add_track(track);
+				if (count == 0)
+					delete track;
+				else
+					animation->add_track(track);
 			}
+		}
+	}
+
+	void FbxLoader::add_textures(std::vector<Material::Texture>& textures, const FbxProperty& prop, const Material::Texture::Usage& usage)
+	{
+		auto texture = prop.GetSrcObject<FbxFileTexture>(0);
+
+		if (texture != nullptr)
+		{
+			auto texture_file_name = FbxPathUtils::GetFileName(texture->GetFileName());
+			auto fbx_file_name = FbxPathUtils::Resolve(_file.c_str());
+			auto fbx_folder = FbxPathUtils::GetFolderName(fbx_file_name);
+			auto resolved_texture_file_name = FbxPathUtils::Bind(fbx_folder, texture_file_name);
+
+			Material::Texture ret;
+			ret.id = texture->GetName();
+			ret.path = resolved_texture_file_name;
+			ret.uv_translation[0] = texture->GetUVTranslation().mData[0];
+			ret.uv_translation[1] = texture->GetUVTranslation().mData[1];
+			ret.uv_scale[0] = texture->GetUVScaling().mData[0];
+			ret.uv_scale[1] = texture->GetUVScaling().mData[1];
+			ret.usage = usage;
+
+			textures.push_back(ret);
+		}
+	}
+
+	void FbxLoader::read_material(FbxScene * scene)
+	{
+		auto material_count = scene->GetMaterialCount();
+		for (int i = 0; i < material_count; ++i)
+		{
+			FbxSurfaceMaterial * material = scene->GetMaterial(i);
+
+			if ((!material->Is<FbxSurfaceLambert>()))
+				continue;
+
+			Material ret;
+			ret.name = _file + "##" + material->GetName();
+
+			FbxSurfaceLambert * lambert = (FbxSurfaceLambert *)material;
+			if (lambert->Ambient.IsValid())
+				ret.ambient = glm::vec4(lambert->Ambient.Get().mData[0], lambert->Ambient.Get().mData[1], lambert->Ambient.Get().mData[2], lambert->Ambient.Get().mData[3]);
+			
+			if (lambert->Diffuse.IsValid())
+				ret.diffuse = glm::vec4(lambert->Diffuse.Get().mData[0], lambert->Diffuse.Get().mData[1], lambert->Diffuse.Get().mData[2], lambert->Diffuse.Get().mData[3]);
+
+			if (lambert->Emissive.IsValid())
+				ret.emissive = glm::vec4(lambert->Emissive.Get().mData[0], lambert->Emissive.Get().mData[1], lambert->Emissive.Get().mData[2], lambert->Emissive.Get().mData[3]);
+
+			add_textures(ret.textures, lambert->Diffuse, Material::Texture::Usage::Diffuse);
+			add_textures(ret.textures, lambert->Emissive, Material::Texture::Usage::Emissive);
+			add_textures(ret.textures, lambert->NormalMap, Material::Texture::Usage::Normal);
+
+			if (lambert->TransparencyFactor.IsValid() && lambert->TransparentColor.IsValid()) 
+			{
+				FbxDouble factor = lambert->TransparencyFactor.Get();
+				FbxDouble3 color = lambert->TransparentColor.Get();
+				FbxDouble avgColor = (color[0] + color[1] + color[2]) / 3.0;
+				ret.opacity = (1.f - (float)(avgColor * factor));
+			}
+			else if (lambert->TransparencyFactor.IsValid())
+				ret.opacity = (1.f - lambert->TransparencyFactor.Get());
+			else if (lambert->TransparentColor.IsValid()) 
+			{
+				FbxDouble3 color = lambert->TransparentColor.Get();
+				ret.opacity = (1.f - (float)((color[0] + color[1] + color[2]) / 3.0));
+			}
+
+			if (material->Is<FbxSurfacePhong>())
+			{
+				FbxSurfacePhong * phong = (FbxSurfacePhong *)material;
+
+				if (phong->Specular.IsValid())
+					ret.specular = glm::vec4(phong->Specular.Get().mData[0], phong->Specular.Get().mData[1], phong->Specular.Get().mData[2], phong->Specular.Get().mData[3]);
+				if (phong->Shininess.IsValid())
+					ret.shininess = (float)phong->Shininess.Get();
+
+				add_textures(ret.textures, phong->Specular, Material::Texture::Usage::Specular);
+			}
+
+			_materials[material] = ret;
 		}
 	}
 }

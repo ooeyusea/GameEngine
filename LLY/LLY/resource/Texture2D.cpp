@@ -36,6 +36,7 @@ namespace lly {
 
 	bool Texture2D::load_from_file(const std::string& filename, bool mipmap, ColorFormat format, TextureWrap s, TextureWrap t, TextureMinFilter min_filter, TextureMagFilter mag_filter)
 	{
+		_name = filename;
 		Image image;
 		if (!image.load_from_file(filename))
 			return false;

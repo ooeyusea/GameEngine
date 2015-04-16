@@ -41,4 +41,14 @@ namespace lly {
 	{
 		_option.merge(option);
 	}
+
+	Pass * Pass::clone()
+	{
+		Pass * ret = new Pass;
+		ret->_id = _id;
+		ret->_program = _program;
+		ret->_option = _option;
+
+		return ret;
+	}
 }

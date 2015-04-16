@@ -1,22 +1,18 @@
 #version 430 core
 layout(location = 0) in vec4 vPosition;
-layout(location = 5) in vec2 vTexCoord;
+layout(location = 4) in vec2 vTexCoord;
 layout(location = 12) in vec2 vWeight_0;
 layout(location = 13) in vec2 vWeight_1;
 layout(location = 14) in vec2 vWeight_2;
 layout(location = 15) in vec2 vWeight_3;
 
-uniform mat4 u_matrix[12];
+uniform mat4 u_matrix[50];
 uniform mat4 u_projection;
 uniform mat4 u_view;
-uniform mat4 u_model;
 
 mat4 u_aaa = mat4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 
-out Vertex
-{
-	vec2 v_texcoord;
-}vertex;
+out vec2 v_texcoord;
 
 vec4 skinPosition(float blendWeight, int matrixIndex)
 {
@@ -37,6 +33,6 @@ vec4 getPosition()
 
 void main()
 {
-	vertex.v_texcoord = vTexCoord;
+	v_texcoord = vTexCoord;
 	gl_Position = u_projection * u_view * getPosition();
 }

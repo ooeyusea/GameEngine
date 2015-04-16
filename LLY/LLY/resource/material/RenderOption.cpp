@@ -62,6 +62,13 @@ namespace lly{
 		_uniforms[uniform.get_name()] = uniform;
 	}
 
+	void RenderOption::set(Uniform& uniform)
+	{
+		auto itr = _uniforms.find(uniform.get_name());
+		if (itr != _uniforms.end())
+			itr->second = uniform;
+	}
+
 	void RenderOption::set(RenderState& state)
 	{
 		_state = state;

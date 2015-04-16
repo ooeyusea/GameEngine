@@ -37,4 +37,19 @@ namespace lly {
 			pass->merge_render_option(_option);
 		}
 	}
+
+	Technique * Technique::clone()
+	{
+		Technique * ret = new Technique;
+		ret->_id = _id;
+		ret->_name = _name;
+		ret->_option = _option;
+
+		for (auto& pass : _passes)
+		{
+			ret->_passes.push_back(pass->clone());
+		}
+
+		return ret;
+	}
 }

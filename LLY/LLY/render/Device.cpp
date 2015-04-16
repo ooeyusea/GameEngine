@@ -104,9 +104,9 @@ namespace lly {
 		, _enable_alpha_test(false)
 		, _alpha_test_func(AlphaTestFunc::ALWAYS)
 		, _alpha_test_factor(0.0f)
-		, _enable_depth_test(false)
+		, _enable_depth_test(true)
 		, _enable_depth_write(true)
-		, _depth_func(DepthFunc::LESS)
+		, _depth_func(DepthFunc::LEQUAL)
 		, _enable_cull_face(false)
 		, _cull_face_side(CullFaceSide::BACK)
 		, _front_face(FrontFace::CCW)
@@ -147,8 +147,8 @@ namespace lly {
 		glfwWindowHint(GLFW_GREEN_BITS, 8);
 		glfwWindowHint(GLFW_BLUE_BITS, 8);
 		glfwWindowHint(GLFW_ALPHA_BITS, 8);
-		glfwWindowHint(GLFW_DEPTH_BITS, 16);
-		glfwWindowHint(GLFW_STENCIL_BITS, 0);
+		glfwWindowHint(GLFW_DEPTH_BITS, 24);
+		glfwWindowHint(GLFW_STENCIL_BITS, 8);
 
 		_window = glfwCreateWindow(width, height, name.c_str(), NULL, NULL);
 		if (!_window)
@@ -173,6 +173,11 @@ namespace lly {
 		{
 			return false;
 		}
+
+		glClearDepth(1.0);
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LEQUAL);
+		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
 		return true;
 	}
@@ -236,11 +241,11 @@ namespace lly {
 		GLbitfield flag = 0;
 		if ((clear | ClearTarget::COLOR) > 0)
 			flag |= GL_COLOR_BUFFER_BIT;
-		else if ((clear | ClearTarget::DEPTH) > 0)
+		if ((clear | ClearTarget::DEPTH) > 0)
 			flag |= GL_DEPTH_BUFFER_BIT;
-		else if ((clear | ClearTarget::ACCUM) > 0)
+		if ((clear | ClearTarget::ACCUM) > 0)
 			flag |= GL_ACCUM_BUFFER_BIT;
-		else if ((clear | ClearTarget::STENCIL) > 0)
+		if ((clear | ClearTarget::STENCIL) > 0)
 			flag |= GL_STENCIL_BUFFER_BIT;
 
 		if (flag > 0)

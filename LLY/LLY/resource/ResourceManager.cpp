@@ -188,6 +188,25 @@ namespace lly {
 		return _materials[id];
 	}
 
+	std::tuple<unsigned int, lly::Material*> ResourceManager::clone_material(unsigned int id, const std::string& name)
+	{
+		auto itr = _materials.find(id);
+		if (itr == _materials.end())
+		{
+			throw std::logic_error("clone invalid material.");
+		}
+		else
+		{
+			unsigned int new_id = System::instance().get_string_table().get_hash_id(name);
+			auto new_itr = _materials.find(new_id);
+			if (new_itr != _materials.end())
+				throw std::logic_error("clone material duplicate.");
+
+			_materials[new_id] = itr->second->clone();
+			return std::make_tuple(new_id, _materials[new_id]);
+		}
+	}
+
 	unsigned int ResourceManager::load_skeleton(const std::string& file, SkeletonData* skeleton)
 	{
 		unsigned int id = System::instance().get_string_table().get_hash_id(file);

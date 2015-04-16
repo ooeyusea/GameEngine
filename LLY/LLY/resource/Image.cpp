@@ -1,6 +1,7 @@
 #include "Image.h"
 #include <png.h>
 #include <algorithm>
+#include "./loader/TGAlib.h"
 
 namespace lly {
 
@@ -22,6 +23,8 @@ namespace lly {
 
 		if (suffix == ".png")
 			return TextureFileType::PNG;
+		else if (suffix == ".tga")
+			return TextureFileType::TGA;
 
 		return TextureFileType::UNKOWN;
 	}
@@ -198,8 +201,45 @@ namespace lly {
 
 	bool Image::load_from_tga(unsigned char* data, int len)
 	{
+		loader::tImageTGA * tga = loader::tgaLoadBuffer(data, len);
+
+		if (tga != nullptr && tga->status == loader::TGA_OK)
+		{
+			if (tga == nullptr)
+				return false;
+
+			if (2 == tga->type || 10 == tga->type)
+			{
+				if (tga->pixelDepth == 16)
+					_format = ColorFormat::RGB5A1;
+				else if (tga->pixelDepth == 24)
+					_format = ColorFormat::RGB888;
+				else if (tga->pixelDepth == 32)
+					_format = ColorFormat::RGBA8888;
+				else
+					throw std::logic_error("Image WARNING: unsupport true color tga data pixel format.");
+			}
+			else if (3 == tga->type)
+			{
+				if (8 == tga->pixelDepth)
+					_format = ColorFormat::I8;
+				else
+					throw std::logic_error("Image WARNING: unsupport gray tga data pixel format.");
+			}
+
+			_width = tga->width;
+			_height = tga->height;
+			_data = lly_util::Data(_width * _height * (tga->pixelDepth / 8) * sizeof(unsigned char));
+			memcpy(_data.data(), tga->imageData, _width * _height * (tga->pixelDepth / 8) * sizeof(unsigned char));
+
+			if (tga && tga->imageData != nullptr)
+				free(tga->imageData);
+		}
+		else
+			throw std::logic_error("unsupport image format!");
+
+		free(tga);
 		return true;
 	}
-
 }
 

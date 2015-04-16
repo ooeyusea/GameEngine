@@ -41,6 +41,7 @@ namespace lly {
 		unsigned int load_material(const std::string& file);
 		Material* get_material(unsigned int id) const;
 		Material* create_material(const std::string& name);
+		std::tuple<unsigned int, Material*> clone_material(unsigned int id, const std::string& name);
 
 		unsigned int load_skeleton(const std::string& file, SkeletonData* skeleton);
 		SkeletonData* get_skeleton(unsigned int id) const;

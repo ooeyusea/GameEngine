@@ -46,8 +46,72 @@ namespace loader {
 	struct MeshPart
 	{
 		glm::mat4 pre_matrix;
+		std::string material;
 		std::vector<int> indices;
 		std::vector<std::tuple<std::string, glm::mat4>> bones;
+	};
+
+	template <typename T>
+	struct OptionalValue
+	{
+		bool valid;
+		T value;
+
+		OptionalValue() : valid(false), value((T)0) {}
+
+		inline void unset() {
+			valid = false;
+		}
+
+		inline void set(const T& v) {
+			valid = true;
+			value = v;
+		}
+
+		inline OptionalValue& operator=(const T& v)
+		{
+			set(v);
+
+			return *this;
+		}
+	};
+
+	struct Material
+	{
+		struct Texture
+		{
+			enum class Usage 
+			{
+				Unknown,
+				Diffuse,
+				Emissive,
+				Specular,
+				Shininess,
+				Normal
+			};
+
+			std::string id;
+			std::string path;
+			float uv_translation[2];
+			float uv_scale[2];
+			Usage usage;
+
+			Texture() : usage(Usage::Unknown)
+			{
+				uv_translation[0] = uv_translation[1] = 0.f;
+				uv_scale[0] = uv_scale[1] = 1.f;
+			}
+		};
+
+		std::string name;
+		OptionalValue<glm::vec4> ambient;
+		OptionalValue<glm::vec4> diffuse;
+		OptionalValue<glm::vec4> emissive;
+		OptionalValue<glm::vec4> specular;
+		OptionalValue<float> shininess;
+		OptionalValue<float> opacity;
+
+		std::vector<Texture> textures;
 	};
 
 	struct AnimInfo 
@@ -91,7 +155,7 @@ namespace loader {
 		void read_mesh(FbxNode * node);
 
 		void cal_vertex_size();
-		void read_vertex(FbxNode * node, float * vertex, int poly_index, int index, int v);
+		void read_vertex(FbxNode * node, float * vertex, int poly_index, int index, int v, int poly_inside_index);
 		int add_vertex(MeshPart& part, float * vertex);
 
 		void construct_bone(FbxNode * root);
@@ -99,9 +163,14 @@ namespace loader {
 
 		void read_animation(FbxScene * scene);
 
+		void read_material(FbxScene * scene);
+		void add_textures(std::vector<Material::Texture>& textures, const FbxProperty& prop, const Material::Texture::Usage& usage);
+		std::unordered_map<std::string, unsigned int> convert_materials();
+
 		std::string _file;
 		int _vertex_format;
 		std::unordered_map<FbxMesh*, MeshInfo> _mesh_infos;
+		std::unordered_map<FbxSurfaceMaterial*, Material> _materials;
 
 		void descript_vertex(lly::VertexDescription& desc);
 

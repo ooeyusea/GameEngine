@@ -20,6 +20,7 @@ namespace lly {
 
 		void use(Device& device);
 		void add(Uniform& uniform);
+		void set(Uniform& uniform);
 		void set(RenderState& state);
 
 		RenderOption to_render() const;

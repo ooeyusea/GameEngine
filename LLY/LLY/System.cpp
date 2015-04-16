@@ -56,22 +56,21 @@ namespace lly {
 		auto material_ptr = _resource_manager.get_material(material);
 		material_ptr->set_current_tech("default");
 
-		auto mesh = _resource_manager.load_mesh("humanoid.fbx");
+		auto mesh = _resource_manager.load_mesh("zhaoyun_.fbx");
 		auto mesh_ptr = _resource_manager.get_mesh(mesh);
-		for (int i = 0; i < mesh_ptr->get_part_count(); ++i)
-			mesh_ptr->get_part(i)->set_material(material);
 
 		set_model_matrix(glm::mat4(1.0f));
 		set_view_matrix(glm::lookAt(glm::vec3(0.0f, 0.0f, 100.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f)));
 		set_projection_matrix(glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 1000.0f));
 
 		float rotation_x = 0.f * M_PI / 180.0f; //0.0f;
-		float rotation_y = -90.f * M_PI / 180.0f;
+		float rotation_y = -45.f * M_PI / 180.0f;
 		float rotation_z = 0.f * M_PI / 180.0f;
 
 		Entity entity;
 		entity.add_mesh(mesh_ptr);
-		entity.set_scale(0.05f, 0.05f, 0.05f);
+		entity.set_scale(0.1f, 0.1f, 0.1f);
+		entity.set_position_y(-50.f);
 		entity.play_animation("Take 001", true);
 
 		auto last = std::chrono::system_clock::now();
@@ -90,10 +89,10 @@ namespace lly {
 			add_render_command_group(nullptr, ClearTarget::COLOR | ClearTarget::DEPTH);
 
 			//rotation_x += 0.001f;
-			rotation_y += 0.02f;
+			//rotation_y += 0.002f;
 			//rotation_z += 0.003f;
 
-			//entity.set_rotation(rotation_x, rotation_y, rotation_z);
+			entity.set_rotation(rotation_x, rotation_y, rotation_z);
 			entity.update(elapse);
 
 			entity.draw();

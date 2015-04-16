@@ -26,7 +26,7 @@ namespace lly {
 
 	void RenderCommandGroup::draw(Device& device)
 	{
-		device.begin(_target, 0);
+		device.begin(_target, ClearTarget::COLOR | ClearTarget::DEPTH);
 		for (auto& command : _commands)
 		{
 			command->draw(device);

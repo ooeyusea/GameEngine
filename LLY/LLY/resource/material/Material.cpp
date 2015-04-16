@@ -7,6 +7,7 @@ namespace lly {
 
 	Material::Material()
 		: _current_tech(nullptr)
+		, _template(false)
 	{
 	}
 
@@ -31,7 +32,7 @@ namespace lly {
 		{
 			if (tech->get_id() >= id)
 			{
-				id = tech->get_id();
+				id = tech->get_id() + 1;
 			}
 		}
 		ret->set_id(id);
@@ -75,5 +76,16 @@ namespace lly {
 				break;
 			}
 		}
+	}
+
+	Material * Material::clone()
+	{
+		Material * ret = new Material;
+		ret->_option = _option;
+		for (auto& tech : _teches)
+		{
+			ret->_teches.push_back(tech->clone());
+		}
+		return ret;
 	}
 }
