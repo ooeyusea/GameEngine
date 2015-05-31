@@ -13,8 +13,8 @@ namespace lly {
 		~Entity();
 
 		void add_mesh(Mesh * mesh);
-		void draw();
-		void update(float elapse);
+		virtual void draw();
+		virtual void update(float elapse);
 
 		void play_animation(const std::string& animation, bool loop);
 

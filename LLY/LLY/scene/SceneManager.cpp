@@ -24,20 +24,14 @@ namespace lly {
 	{
 		ASSERT(scene != nullptr);
 
-		if (_scene != nullptr)
-		{
-			_scene->onExit();
-		}
 
 		_scene = scene;
-		_scene->onEnter();
 	}
 
 	void SceneManager::run()
 	{
 		if (_scene != nullptr)
 		{
-			_scene->run();
 		}
 	}
 }

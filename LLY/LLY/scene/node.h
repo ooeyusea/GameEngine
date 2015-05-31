@@ -6,8 +6,10 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <glm/fwd.hpp>
+#include <functional>
 
 namespace lly {
+	class Scene;
     class Node
     {
     public:
@@ -19,9 +21,11 @@ namespace lly {
 
         void set_parent(Node * node) { _parent = node; }
         Node * get_parent() const { return _parent; }
+		void remove_from_parent();
 
         void add_child(Node * node);
         Node * get_child_by_name(const std::string& name);
+		void remove_child(Node * node);
 
         void set_position(float x, float y, float z) { _position = glm::vec3(x, y, z); }
         void set_position(const glm::vec3& v) { _position = v; }
@@ -43,6 +47,14 @@ namespace lly {
         const glm::vec3& get_scale() { return _scale; }
 
         const glm::mat4& get_transform() const { return _transform; }
+
+		virtual void draw() {}
+		virtual void update(float elapse) {}
+		virtual void last_update() {}
+
+		virtual void add_to_scene(lly::Scene * scene) {}
+
+		virtual void visit(std::function<void (Node*)> f);
 
         void apply_transform();
 

@@ -57,6 +57,22 @@ namespace lly {
 		return id;
 	}
 
+	unsigned int ResourceManager::create_texture_2d(const std::string& file, int width, int height, bool mipmap, ColorFormat format, TextureWrap s, TextureWrap t, TextureMinFilter min_filter, TextureMagFilter mag_filter)
+	{
+		unsigned int id = System::instance().get_string_table().get_hash_id(file);
+
+		auto itr = _tex2ds.find(id);
+		if (itr == _tex2ds.end())
+		{
+			Texture2D * texture = new Texture2D;
+			texture->set_id(id);
+			texture->create(width, height, mipmap, format, s, t, min_filter, mag_filter);
+
+			_tex2ds[id] = texture;
+		}
+		return id;
+	}
+
 	Texture2D* ResourceManager::get_texture_2d(unsigned int id) const
 	{
 		auto itr = _tex2ds.find(id);

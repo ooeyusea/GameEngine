@@ -53,6 +53,10 @@ namespace lly_util {
 		case lly::ColorFormat::AI88: return GL_LUMINANCE_ALPHA;
 		case lly::ColorFormat::RGBA4444: return GL_RGBA;
 		case lly::ColorFormat::RGB5A1: return GL_RGBA;
+		case lly::ColorFormat::RG16: return GL_RG16;
+		case lly::ColorFormat::RG16F: return GL_RG16F;
+		case lly::ColorFormat::R32F: return GL_R32F;
+		case lly::ColorFormat::DEPTH_COMPONENT: return GL_DEPTH_COMPONENT;
 		}
 		return GL_RGBA;
 	}
@@ -63,6 +67,9 @@ namespace lly_util {
 		{
 		case lly::ColorFormat::BGRA8888: return 32;
 		case lly::ColorFormat::RGBA8888: return 32;
+		case lly::ColorFormat::RG16: return 32;
+		case lly::ColorFormat::RG16F: return 32;
+		case lly::ColorFormat::R32F: return 32;
 		case lly::ColorFormat::RGB888: return 24;
 		case lly::ColorFormat::RGB565: return 16;
 		case lly::ColorFormat::A8: return 8;
@@ -70,6 +77,7 @@ namespace lly_util {
 		case lly::ColorFormat::AI88: return 16;
 		case lly::ColorFormat::RGBA4444: return 16;
 		case lly::ColorFormat::RGB5A1: return 16;
+		case lly::ColorFormat::DEPTH_COMPONENT: return 32;
 		}
 		return 32;
 	}
@@ -80,6 +88,9 @@ namespace lly_util {
 		{
 		case lly::ColorFormat::BGRA8888: return GL_UNSIGNED_BYTE;
 		case lly::ColorFormat::RGBA8888: return GL_UNSIGNED_BYTE;
+		case lly::ColorFormat::RG16: return GL_UNSIGNED_SHORT;
+		case lly::ColorFormat::RG16F: return GL_HALF_FLOAT;
+		case lly::ColorFormat::R32F: return GL_FLOAT;
 		case lly::ColorFormat::RGB888: return GL_UNSIGNED_BYTE;
 		case lly::ColorFormat::RGB565: return GL_UNSIGNED_SHORT_5_6_5;
 		case lly::ColorFormat::A8: return GL_UNSIGNED_BYTE;
@@ -87,6 +98,7 @@ namespace lly_util {
 		case lly::ColorFormat::AI88: return GL_UNSIGNED_BYTE;
 		case lly::ColorFormat::RGBA4444: return GL_UNSIGNED_SHORT_4_4_4_4;
 		case lly::ColorFormat::RGB5A1: return GL_UNSIGNED_SHORT_5_5_5_1;
+		case lly::ColorFormat::DEPTH_COMPONENT: return GL_FLOAT;
 		}
 		return GL_UNSIGNED_BYTE;
 	}

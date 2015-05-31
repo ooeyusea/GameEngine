@@ -85,4 +85,16 @@ namespace lly {
 
 		return ret;
     }
+
+	void SkeletonData::init_animation_state(std::unordered_map<std::string, lly::AnimationState>& state_set)
+	{
+		for (auto& itr : _animations)
+		{
+			state_set[itr.first].set_animation(itr.first);
+			state_set[itr.first].set_time_scale(1.0f);
+			state_set[itr.first].set_length(itr.second->get_length());
+			state_set[itr.first].set_weight(1.0f);
+			state_set[itr.first].set_loop(false);
+		}
+	}
 }

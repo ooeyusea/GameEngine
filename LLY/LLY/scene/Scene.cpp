@@ -2,86 +2,75 @@
 #include "GameObject.h"
 #include "Camera.h"
 #include "../util/Macros.h"
+#include "../System.h"
+#include "Light.h"
+#include <algorithm>
+#include "../render/RenderTarget.h"
+#include "../resource/Mesh.h"
+#include "../resource/MeshPart.h"
 
 namespace lly {
 
 	Scene::Scene()
-		: _root(nullptr),
-		  _curCameraIndex(0)
 	{
-		_root = new GameObject();
+		
 	}
 
 	Scene::~Scene()
 	{
-		SAFE_DELETE(_root);
+	}
 
+	bool Scene::init()
+	{
+		return true;
+	}
+
+	void Scene::release()
+	{
+
+	}
+
+	void Scene::update(float elapse)
+	{
+		for (auto& root : _roots)
+		{
+			root->update(elapse);
+			root->last_update();
+		}
+	}
+
+	void Scene::render()
+	{
+		std::sort(_cameras.begin(), _cameras.end(), Camera::order);
 		for (auto& camera : _cameras)
 		{
-			delete camera;
+			__render(camera);
 		}
-		_cameras.clear();
+
+		for (auto& light : _lights)
+			__render(light);
 	}
 
-	void Scene::onEnter()
+	void Scene::add_node(Camera * camera)
 	{
+		auto itr = std::find(_cameras.begin(), _cameras.end(), camera);
+		if (itr == _cameras.end())
+			_cameras.push_back(camera);
 	}
 
-	void Scene::onExit()
+	void Scene::__render(Camera * camera)
 	{
+		camera->begin_render();
+		for (auto& root : _roots)
+		{
+			root->visit([](Node * node){
+				node->draw();
+			});
+		}
 	}
 
-	void Scene::run()
+	void Scene::__render(Light * light)
 	{
-		this->updateBefore();
-
-		this->update();
-
-		this->updateAfter();
-	}
-
-	void Scene::updateBefore()
-	{
-	}
-
-	void Scene::update()
-	{
-	}
-
-	void Scene::updateAfter()
-	{
-	}
-
-	void Scene::addChild(GameObject* child)
-	{
-		ASSERT(child != nullptr);
-
-		_root->addChild(child);
-	}
-
-	void Scene::removeChild(GameObject* child)
-	{
-		ASSERT(child != child);
-
-		_root->removeChild(child);
-	}
-
-	void Scene::addCamera(Camera* camera)
-	{
-		ASSERT(camera != nullptr);
-
-		_cameras.push_back(camera);
-	}
-
-	void Scene::setCurCamera(unsigned int curCameraIndex)
-	{
-		ASSERT(curCameraIndex < _cameras.size());
-
-		_curCameraIndex = curCameraIndex;
-	}
-
-	Camera* Scene::getCurCamera()
-	{
-		return _cameras[_curCameraIndex];
+		light->draw_light();
 	}
 }

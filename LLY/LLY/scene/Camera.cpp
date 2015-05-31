@@ -1,76 +1,81 @@
 #include "Camera.h"
+#include <glm/gtc/matrix_transform.hpp>
+#include "../util/LLYIncludes.h"
+#include "../System.h"
+#include "Scene.h"
 
 namespace lly {
 
-	Camera* Camera::createPerspective(float fiedlOfView, float aspectRatio, float near, float far)
+	Camera::Camera()
+		: _near(0.0f)
+		, _far(0.0f)
+		, _order(0)
+		, _target(nullptr)
+		, _clear_flags(ClearTarget::COLOR | ClearTarget::DEPTH | ClearTarget::STENCIL)
 	{
-		return new Camera(fiedlOfView, aspectRatio, near, far);
-	}
-
-	Camera* Camera::createPerspective(float zoomX, float zoomY, float aspectRatio, float near, float far)
-	{
-		return new Camera(zoomX, zoomY, aspectRatio, near, far);
-	}
-
-	Camera::Camera(float fiedlOfView, float aspectRatio, float near, float far)
-		: _type(PERSPECTIVE),
-		_fieldOfView(fiedlOfView),
-		_zoomX(0.0f),
-		_zoomY(0.0f),
-		_aspectRatio(aspectRatio),
-		_near(near),
-		_far(far)
-	{
-
-	}
-
-	Camera::Camera(float zoomX, float zoomY, float aspectRatio, float near, float far)
-		: _type(PERSPECTIVE),
-		_fieldOfView(0.0f),
-		_zoomX(zoomX),
-		_zoomY(zoomY),
-		_aspectRatio(aspectRatio),
-		_near(near),
-		_far(far)
-	{
+		memset(&_data, 0, sizeof(_data));
 	}
 
 	Camera::~Camera()
 	{
 	}
 
-	Camera::Type Camera::getType()
+	void Camera::set_prespective(float fovy, float aspect, float n, float f)
 	{
-		return _type;
+		_type = Type::PERSPECTIVE;
+		_data.prespective.aspect = aspect;
+		_data.prespective.fovy = fovy;
+		_near = n;
+		_far = f;
+
+		update_projection();
 	}
 
-	float Camera::getFieldOfView()
+	void Camera::set_ortho(float left, float right, float top, float bottom, float n, float f)
 	{
-		return _fieldOfView;
+		_type = Type::ORTHOGRAPHIC;
+		_data.ortho.left = left;
+		_data.ortho.right = right;
+		_data.ortho.top = top;
+		_data.ortho.bottom = right;
+		_near = n;
+		_far = f;
+
+		update_projection();
 	}
 
-	float Camera::getZoomX()
+	bool Camera::order(Camera * a, Camera * b)
 	{
-		return _zoomX;
+		return a->order < b->order;
 	}
 
-	float Camera::getZoomY()
+	void Camera::update_projection()
 	{
-		return _zoomY;
+		if (_type == Type::PERSPECTIVE)
+		{
+			_projection = glm::perspective(_data.prespective.fovy, _data.prespective.aspect, _near, _far);
+		}
+		else if (_type == Type::PERSPECTIVE)
+		{
+			_projection = glm::ortho(_data.ortho.left, _data.ortho.right, _data.ortho.bottom, _data.ortho.top, _near, _far);
+		}
 	}
 
-	float Camera::getAspectRatio()
+	void Camera::add_to_scene(lly::Scene * scene)
 	{
-		return _aspectRatio;
+		scene->add_node(this);
 	}
 
-	float Camera::getNear()
+	void Camera::begin_render()
 	{
-		return _near;
-	}
+		System::instance().add_render_command_group(_target, _clear_flags);
+		System::instance().set_projection_matrix(_projection);
 
-	float Camera::getFar()
-	{
-		return _far;
+		glm::vec3 center = _position + _rotation * glm::vec3(0.0f, 0.0f, -1.0f);
+		glm::vec3 up = _rotation * glm::vec3(0.0f, 1.0f, 0.0f);
+		glm::mat4 view = glm::lookAt(_position, center, up);
+		System::instance().set_view_matrix(view);
+
+		System::instance().set_eye(_position);
 	}
 }

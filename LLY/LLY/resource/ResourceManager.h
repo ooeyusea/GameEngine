@@ -1,6 +1,7 @@
 #ifndef RESOURCEMANAGER_H_
 #define RESOURCEMANAGER_H_
 #include <unordered_map>
+#include "../util/LLYIncludes.h"
 
 namespace lly {
 	class Texture2D;
@@ -29,6 +30,7 @@ namespace lly {
 		~ResourceManager();
 
 		unsigned int load_texture_2d(const std::string& file);
+		unsigned int create_texture_2d(const std::string& file, int width, int height, bool mipmap, ColorFormat format, TextureWrap s, TextureWrap t, TextureMinFilter min_filter, TextureMagFilter mag_filter);
 		Texture2D* get_texture_2d(unsigned int id) const;
 
 		unsigned int load_program(const std::string& vertex, const std::string& fragment);
@@ -36,6 +38,7 @@ namespace lly {
 		Program* get_program(unsigned int id) const;
 
 		unsigned int load_mesh(const std::string& file);
+		unsigned int create_plane(const std::string& file, int width, int height);
 		Mesh* get_mesh(unsigned int id) const;
 
 		unsigned int load_material(const std::string& file);

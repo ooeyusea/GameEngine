@@ -1,42 +1,37 @@
 #ifndef SCENE_H_
 #define SCENE_H_
-
+#include <set>
 #include <vector>
 
 namespace lly {
-
-	class GameObject;
+	class Node;
 	class Camera;
+	class Light;
+	class RenderTarget;
 
 	class Scene
 	{
 	public:
-		static Scene* create();
-
 		Scene();
 		virtual ~Scene();
 
-		virtual void onEnter();
-		virtual void onExit();
+		bool init();
+		void release();
 
-		virtual void run();
-		virtual void updateBefore();
-		virtual void update();
-		virtual void updateAfter();
+		void update(float elapse);
 
-		void addChild(GameObject* child);
-		void removeChild(GameObject* child);
+		void render();
 
-		void addCamera(Camera* camera);
-		void setCurCamera(unsigned int curCameraIndex);
-		Camera* getCurCamera();
-
-	protected:
+		void add_node(Node * node) { _roots.insert(node); }
+		void add_node(Light * light) { _lights.insert(light); }
+		void add_node(Camera * camera);
 
 	private:
-		GameObject* _root;
+		void __render(Camera * camera);
+		void __render(Light * light);
 
-		unsigned int _curCameraIndex;
+		std::set<Node *> _roots;
+		std::set<Light*> _lights;
 		std::vector<Camera*> _cameras;
 	};
 }

@@ -8,6 +8,7 @@ namespace lly {
 	class Skeleton;
     class BoneData;
     class Animation;
+	class AnimationState;
     class SkeletonData
     {
     public:
@@ -24,6 +25,8 @@ namespace lly {
 		BoneData* get_root_bone() const { return _root; }
 
         Skeleton * create_skeleton();
+
+		void init_animation_state(std::unordered_map<std::string, lly::AnimationState>& state_set);
 
     private:
         std::string _name;

@@ -1,0 +1,48 @@
+{
+	"nodes" : [
+		{
+			"type" : 2,
+			"name" : "player",
+			"path" : "zhaoyun_.fbx",
+			"position" : { "x" : 0, "y" : -50, "z" : 0 },
+			"rotation" : { "x" : 0, "y" : 0, "z" : 0 },
+			"scale" : { "x" : 0.1, "y" : 0.1, "z" : 0.1 },
+			"children" : []
+		},
+		{
+			"type" : 4,
+			"name" : "camera",
+			"order" : 0,
+			"camera_type" : 0,
+			"fovy" : 45.0,
+			"aspect" : 1.333,
+			"near" : 0.1,
+			"far" : 1000.0,
+			"position" : { "x" : 0, "y" : 0, "z" : 100.0 },
+			"rotation" : { "x" : 0, "y" : 0, "z" : 0 },
+			"scale" : { "x" : 0, "y" : 0, "z" : 0 },
+			"children" : []
+		},
+		{
+			"type" : 3,
+			"name" : "ambient",
+			"color" : { "r" : 0.3, "g" : 0.3, "b" : 0.3, "a" : 1 },
+			"light_type" : 0,
+			"position" : { "x" : 0, "y" : 0, "z" : 0.0 },
+			"rotation" : { "x" : 0, "y" : 0, "z" : 0 },
+			"scale" : { "x" : 0, "y" : 0, "z" : 0 },
+			"children" : []
+		},
+		{
+			"type" : 3,
+			"name" : "directional",
+			"color" : { "r" : 1, "g" : 1, "b" : 1, "a" : 1 },
+			"light_type" : 1,
+			"position" : { "x" : 0, "y" : 0, "z" : 0.0 },
+			"rotation" : { "x" : 0, "y" : 0, "z" : 0 },
+			"scale" : { "x" : 0, "y" : 0, "z" : 0 },
+			"direction" : { "x" : 0, "y" : 0, "z" : -1.0 },
+			"children" : []
+		}
+	]
+}

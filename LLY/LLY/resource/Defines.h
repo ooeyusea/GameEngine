@@ -64,6 +64,10 @@ namespace lly {
 		DEFAULT,
 		BGRA8888,
 		RGBA8888,
+		RG16,
+		RG16F,
+		R32,
+		R32F,
 		RGB888,
 		RGB565,
 		A8,
@@ -71,6 +75,7 @@ namespace lly {
 		AI88,
 		RGBA4444,
 		RGB5A1,
+		DEPTH_COMPONENT,
 	};
 
 	enum class TextureMinFilter

@@ -19,10 +19,23 @@ namespace lly {
         _children.clear();
     }
 
+	void Node::remove_from_parent()
+	{
+		if (_parent)
+			_parent->remove_child(this);
+	}
+
     void Node::add_child(Node * node)
     {
         _children.push_back(node);
     }
+
+	void Node::remove_child(Node * node)
+	{
+		auto itr = std::find(_children.begin(), _children.end(), node);
+		if (itr != _children.end())
+			_children.erase(itr);
+	}
 
     Node * Node::get_child_by_name(const std::string& name)
     {
@@ -35,6 +48,15 @@ namespace lly {
         }
         return nullptr;
     }
+
+	void Node::visit(std::function<void(Node*)> f)
+	{
+		f(this);
+		for (auto child : _children)
+		{
+			child->visit(f);
+		}
+	}
 
     void Node::apply_transform()
     {

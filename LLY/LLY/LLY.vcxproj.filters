@@ -198,6 +198,30 @@
     <ClCompile Include="scene\AnimationState.cpp">
       <Filter>scene</Filter>
     </ClCompile>
+    <ClCompile Include="resource\loader\TGAlib.cpp">
+      <Filter>resource\loader</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\Light.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="render\LightingCommand.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="render\AmbientCommand.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="render\DirectLightCommand.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="render\PointLightingCommand.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="render\SpotLightingCommand.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="resource\loader\SceneLoader.cpp">
+      <Filter>resource\loader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="System.h">
@@ -361,6 +385,30 @@
     </ClInclude>
     <ClInclude Include="scene\AnimationState.h">
       <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\loader\TGAlib.h">
+      <Filter>resource\loader</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\Light.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="render\LightingCommand.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="render\AmbientCommand.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="render\DirectLightCommand.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="render\PointLightingCommand.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="render\SpotLightingCommand.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="resource\loader\SceneLoader.h">
+      <Filter>resource\loader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

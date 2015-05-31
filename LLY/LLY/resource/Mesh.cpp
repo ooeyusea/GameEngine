@@ -75,8 +75,11 @@ namespace lly {
 			auto material = System::instance().get_resource_manager().get_material(part->get_material());
 			System::instance().set_matrix_palette(part->get_matrix_palette(skeleton));
 
-			//if (i == 2)
-			material->draw(*part);
+			//if (i == 3)
+			{
+				material->set_current_tech("default");
+				material->draw(*part);
+			}
 			++i;
 		}
 	}

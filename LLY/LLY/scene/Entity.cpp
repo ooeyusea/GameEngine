@@ -53,6 +53,6 @@ namespace lly {
 	void Entity::play_animation(const std::string& animation, bool loop)
 	{
 		if (_skeleton != nullptr)
-			_skeleton->play_animation(animation, loop);
+			_skeleton->set_animation(animation, loop, 1.0f);
 	}
 }

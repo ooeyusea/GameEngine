@@ -7,6 +7,7 @@
 #include <glm/gtc/quaternion.hpp>
 #include <glm/fwd.hpp>
 #include "AnimationState.h"
+#include <list>
 
 namespace lly {
 
@@ -29,7 +30,8 @@ namespace lly {
 
 		SkeletonData * get_data() const { return _data; }
 
-		void play_animation(const std::string& animation, bool loop);
+		void set_animation(const std::string& animation, bool loop, float weight);
+		void stop_animation(const std::string& animation);
 
 		void update(float elapse);
 
@@ -41,6 +43,7 @@ namespace lly {
         std::unordered_map<std::string, Bone*> _bones_by_name;
         Bone * _root;
 		std::unordered_map<std::string, AnimationState> _state_set;
+		std::list<AnimationState*> _enable_states;
     };
 }
 

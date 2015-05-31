@@ -5,9 +5,17 @@
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -22,7 +30,20 @@
     <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
@@ -35,17 +56,32 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>../external/png/include;../external/glfw/include;../external/glew/include;../external/zlib/include;../external;$(IncludePath)</IncludePath>
-    <LibraryPath>../external/png/lib;../external/glfw/lib;../external/glew/lib;../external/zlib/lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>../external/png/include;../external/glfw/include;../external/glew/include;../external/zlib/include;../external;../external/jsoncpp/include;$(IncludePath)</IncludePath>
+    <LibraryPath>../external/png/lib;../external/glfw/lib;../external/glew/lib;../external/zlib/lib;../external/jsoncpp/lib;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>../external/glfw/bin;../external/glew/bin;../external/zlib/bin;$(ExecutablePath)</ExecutablePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>../external/png/include;../external/glfw/include;../external/glew/include;../external/zlib/include;../external;../external/jsoncpp/include;$(IncludePath)</IncludePath>
+    <LibraryPath>../external/png/lib;../external/glfw/lib;../external/glew/lib;../external/zlib/lib;../external/jsoncpp/lib;$(LibraryPath)</LibraryPath>
     <ExecutablePath>../external/glfw/bin;../external/glew/bin;../external/zlib/bin;$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -61,12 +97,48 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32.lib;libpng.lib;libzlib.lib;libfbxsdk-md.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32.lib;libpng.lib;libzlib.lib;libfbxsdk-md.lib;jsoncpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <AdditionalLibraryDirectories>C:\Program Files\Autodesk\FBX\FBX SDK\2015.1\lib\vs2013\x86\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_USE_MATH_DEFINES;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Program Files\Autodesk\FBX\FBX SDK\2015.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32.lib;libpng.lib;libzlib.lib;libfbxsdk-md.lib;jsoncpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <AdditionalLibraryDirectories>C:\Program Files\Autodesk\FBX\FBX SDK\2015.1\lib\vs2013\x86\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_USE_MATH_DEFINES;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>
@@ -93,16 +165,23 @@
     <ClCompile Include="math\Vector2.cpp" />
     <ClCompile Include="math\Vector3.cpp" />
     <ClCompile Include="math\Vector4.cpp" />
+    <ClCompile Include="render\AmbientCommand.cpp" />
     <ClCompile Include="render\Device.cpp" />
+    <ClCompile Include="render\DirectLightCommand.cpp" />
+    <ClCompile Include="render\LightingCommand.cpp" />
+    <ClCompile Include="render\PointLightingCommand.cpp" />
     <ClCompile Include="render\RenderCommand.cpp" />
     <ClCompile Include="render\RenderCommandGroup.cpp" />
     <ClCompile Include="render\RenderTarget.cpp" />
+    <ClCompile Include="render\SpotLightingCommand.cpp" />
     <ClCompile Include="resource\animation.cpp" />
     <ClCompile Include="resource\bone_data.cpp" />
     <ClCompile Include="resource\Image.cpp" />
     <ClCompile Include="resource\IndexBuffer.cpp" />
     <ClCompile Include="resource\key_frame.cpp" />
     <ClCompile Include="resource\loader\FbxLoader.cpp" />
+    <ClCompile Include="resource\loader\SceneLoader.cpp" />
+    <ClCompile Include="resource\loader\TGAlib.cpp" />
     <ClCompile Include="resource\material\Material.cpp" />
     <ClCompile Include="resource\material\MaterialLoader.cpp" />
     <ClCompile Include="resource\material\Pass.cpp" />
@@ -128,6 +207,7 @@
     <ClCompile Include="scene\Camera.cpp" />
     <ClCompile Include="scene\Entity.cpp" />
     <ClCompile Include="scene\GameObject.cpp" />
+    <ClCompile Include="scene\Light.cpp" />
     <ClCompile Include="scene\node.cpp" />
     <ClCompile Include="scene\Scene.cpp" />
     <ClCompile Include="scene\SceneManager.cpp" />
@@ -146,10 +226,15 @@
     <ClInclude Include="math\Vector2.h" />
     <ClInclude Include="math\Vector3.h" />
     <ClInclude Include="math\Vector4.h" />
+    <ClInclude Include="render\AmbientCommand.h" />
     <ClInclude Include="render\Device.h" />
+    <ClInclude Include="render\DirectLightCommand.h" />
+    <ClInclude Include="render\LightingCommand.h" />
+    <ClInclude Include="render\PointLightingCommand.h" />
     <ClInclude Include="render\RenderCommand.h" />
     <ClInclude Include="render\RenderCommandGroup.h" />
     <ClInclude Include="render\RenderTarget.h" />
+    <ClInclude Include="render\SpotLightingCommand.h" />
     <ClInclude Include="resource\animation.h" />
     <ClInclude Include="resource\bone_data.h" />
     <ClInclude Include="resource\Defines.h" />
@@ -157,6 +242,8 @@
     <ClInclude Include="resource\IndexBuffer.h" />
     <ClInclude Include="resource\key_frame.h" />
     <ClInclude Include="resource\loader\FbxLoader.h" />
+    <ClInclude Include="resource\loader\SceneLoader.h" />
+    <ClInclude Include="resource\loader\TGAlib.h" />
     <ClInclude Include="resource\material\Material.h" />
     <ClInclude Include="resource\material\MaterialLoader.h" />
     <ClInclude Include="resource\material\Pass.h" />
@@ -182,6 +269,7 @@
     <ClInclude Include="scene\Camera.h" />
     <ClInclude Include="scene\Entity.h" />
     <ClInclude Include="scene\GameObject.h" />
+    <ClInclude Include="scene\Light.h" />
     <ClInclude Include="scene\node.h" />
     <ClInclude Include="scene\Scene.h" />
     <ClInclude Include="scene\SceneManager.h" />
