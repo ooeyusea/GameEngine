@@ -35,4 +35,6 @@
 			ptr = nullptr;\
 		}
 
+#define MAX_LOD 3
+
 #endif

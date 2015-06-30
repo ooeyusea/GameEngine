@@ -7,6 +7,7 @@ namespace lly {
 	class Pass;
 	class Device;
 	class MeshPart;
+	class IndexBuffer;
 
 	class Technique
 	{
@@ -27,6 +28,7 @@ namespace lly {
 		void set_render_state(RenderState& state) { _option.set(state); }
 
 		void draw(MeshPart& obj);
+		void draw(IndexBuffer * index);
 
 		void merge_render_option(const RenderOption& option);
 

@@ -61,6 +61,7 @@ namespace lly {
     void Node::apply_transform()
     {
 		glm::mat4 transform = lly_util::to_sqt(_position, _rotation, _scale);
+		on_changed();
 
         if (_parent)
         {

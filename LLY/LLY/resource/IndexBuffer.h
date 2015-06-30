@@ -14,9 +14,11 @@ namespace lly {
 		IndexBuffer();
 		~IndexBuffer();
 
+		bool create(int size);
 		bool load_indices(const char * data, int len);
+		void update(const char * data, int len, int count);
 		bool gen(VertexBuffer * vertex_buffer, const VertexDescription& description);
-
+		
 		void draw(Device& device);
 
 	private:

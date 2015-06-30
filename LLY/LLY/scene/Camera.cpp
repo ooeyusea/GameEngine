@@ -61,6 +61,12 @@ namespace lly {
 		}
 	}
 
+	void Camera::on_changed()
+	{
+		for (auto& listener : _listeners)
+			listener->on_camera_changed(this);
+	}
+
 	void Camera::add_to_scene(lly::Scene * scene)
 	{
 		scene->add_node(this);

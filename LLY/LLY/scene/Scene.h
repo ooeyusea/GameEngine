@@ -26,6 +26,8 @@ namespace lly {
 		void add_node(Light * light) { _lights.insert(light); }
 		void add_node(Camera * camera);
 
+		Camera * get_camera() const { return *_cameras.begin(); }
+
 	private:
 		void __render(Camera * camera);
 		void __render(Light * light);

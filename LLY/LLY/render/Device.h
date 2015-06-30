@@ -5,6 +5,7 @@
 
 namespace lly {
 	class System;
+	class Input;
 	class RenderTarget;
 	class Program;
 	class Texture2D;
@@ -56,7 +57,7 @@ namespace lly {
 
 		bool createWindow(const std::string& name, int width, int height);
 
-		void reg(System&);
+		void reg(Input&);
 		bool shouldClose();
 		void run();
 		void exit();

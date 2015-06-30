@@ -28,6 +28,14 @@ namespace lly {
 		}
 	}
 
+	void Technique::draw(IndexBuffer * obj)
+	{
+		for (auto& pass : _passes)
+		{
+			pass->draw(obj);
+		}
+	}
+
 	void Technique::merge_render_option(const RenderOption& option)
 	{
 		_option.merge(option);

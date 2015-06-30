@@ -7,6 +7,8 @@
 #include <json/json.h>
 #include "../../util/FileUtil.h"
 #include "../../System.h"
+#include "../../scene/Terrian.h"
+#include "../HeightMap.h"
 
 namespace loader {
 	SceneLoader::SceneLoader()
@@ -24,6 +26,7 @@ namespace loader {
 		ENTITY = 2,
 		LIGHT = 3,
 		CAMERA = 4,
+		TERRIAN = 5,
 	};
 
 	lly::Node * parse_normal(const Json::Value& root)
@@ -124,6 +127,24 @@ namespace loader {
 		return ret;
 	}
 
+	lly::Node * parse_terrian(const Json::Value& root)
+	{
+		auto width = root["width"].asFloat();
+		auto height = root["height"].asFloat();
+		auto row = root["row"].asInt();
+		auto col = root["col"].asInt();
+		auto file = root["file"].asString();
+		auto precision = root["precision"].asFloat();
+
+		lly::HeightMap height_map;
+		height_map.load_from_file(file, precision);
+
+		lly::Terrian * ret = new lly::Terrian;
+		ret->create(width, height, row, col, height_map);
+
+		return ret;
+	}
+
 	lly::Node * parse_scene_node(const Json::Value& root)
 	{
 		lly::Node * ret = nullptr;
@@ -134,6 +155,7 @@ namespace loader {
 		case NodeType::ENTITY: ret = parse_entity(root);  break;
 		case NodeType::LIGHT: ret = parse_light(root); break;
 		case NodeType::CAMERA: ret = parse_camera(root); break;
+		case NodeType::TERRIAN: ret = parse_terrian(root); break;
 		default: 
 			throw std::logic_error("unsupport node type");
 			break;

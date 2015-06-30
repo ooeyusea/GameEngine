@@ -20,6 +20,7 @@
 #include "resource/Program.h"
 #include "scene/Scene.h"
 #include "resource/loader/SceneLoader.h"
+#include "scene/Camera.h"
 
 namespace lly {
 	System::System()
@@ -55,7 +56,7 @@ namespace lly {
 			throw std::runtime_error("create window failed");
 		}
 
-		_device->reg(*this);
+		_device->reg(_input);
 
 		float vertices[4 * 3] = {
 			-1.0f, 1.0f, 0.0f,
@@ -131,6 +132,16 @@ namespace lly {
 			auto a = std::chrono::duration_cast<std::chrono::microseconds>(last.time_since_epoch()).count();
 			auto b = std::chrono::duration_cast<std::chrono::microseconds>(now.time_since_epoch()).count();
 			float elapse = (float)(b - a) / 1000000.0f;
+
+			auto camera = scene->get_camera();
+			if (_input.get_key(Input::Key::W))
+				camera->set_position_z(camera->get_position().z + 10 * elapse);
+			else if (_input.get_key(Input::Key::S))
+				camera->set_position_z(camera->get_position().z - 10 * elapse);
+			else if (_input.get_key(Input::Key::A))
+				camera->set_position_x(camera->get_position().x - 10 * elapse);
+			else if (_input.get_key(Input::Key::D))
+				camera->set_position_x(camera->get_position().x + 10 * elapse);
 
 			last = now;
 

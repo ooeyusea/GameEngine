@@ -8,6 +8,7 @@ namespace lly {
 	class Technique;
 	class Device;
 	class MeshPart;
+	class IndexBuffer;
 
 	class Material : public Resource
 	{
@@ -26,6 +27,7 @@ namespace lly {
 		void set_uniform(Uniform& uniform) { _option.set(uniform); }
 
 		void draw(MeshPart& obj);
+		void draw(IndexBuffer * index);
 
 		void merge_render_option();
 

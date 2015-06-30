@@ -19,6 +19,11 @@ namespace lly {
 		int height() const { return _height;  }
 
 		bool change_color_format(ColorFormat format);
+
+		void get_rgb(int x, int y, float& r, float& g, float&b);
+
+		int get_width() const { return _width; }
+		int get_height() const { return _height; }
 		
 	private:
 		bool load_from_jpg(unsigned char* data, int len);

@@ -1,5 +1,6 @@
 #include "Device.h"
 #include "../System.h"
+#include "../input/Input.h"
 #include <iostream>
 #include "../util/FuncUnitl.h"
 #include "../resource/Program.h"
@@ -96,6 +97,8 @@ namespace lly {
 		LLY_SAFE_DELETE(ptr);
 	}
 
+	Input * g_input = nullptr;
+
 	Device::Device()
 		: _window(nullptr)
 		, _current_program(nullptr)
@@ -183,23 +186,30 @@ namespace lly {
 	}
 
 
-	void Device::reg(System& system)
+	void Device::reg(Input& input)
 	{
+		g_input = &input;
 		glfwSetMouseButtonCallback(_window, [](GLFWwindow* window, int button, int action, int modify){
-			//system.getInput.dispatch(llye::toMouseButtonEvent(button, action, modify));
+			if (action == GLFW_PRESS)
+				g_input->on_key_press(lly::to_key_from_glfw(button));
+			else if (action == GLFW_RELEASE)
+				g_input->on_key_release(lly::to_key_from_glfw(button));
 		});
 
 		glfwSetCursorPosCallback(_window, [](GLFWwindow* window, double x, double y){
-			//system.getInput.dispatch(llye::toMouseMoveEvent(x, y));
+			g_input->on_mouse_move((float)x, (float)y);
 		});
 		glfwSetScrollCallback(_window, [](GLFWwindow* window, double x, double y){
-			//system.getInput.dispatch(llye::toMouseScrollEvent(x, y));
+			g_input->on_mouse_scroll(x, y);
 		});
 		glfwSetCharCallback(_window, [](GLFWwindow* window, unsigned int character){
 			
 		});
 		glfwSetKeyCallback(_window, [](GLFWwindow* window, int key, int scancode, int action, int mods){
-			//system.getInput.dispatch(llye::toKeyEvent(key, scancode, action, mods));
+			if (action == GLFW_PRESS)
+				g_input->on_key_press(lly::to_key_from_glfw(key));
+			else if (action == GLFW_RELEASE)
+				g_input->on_key_release(lly::to_key_from_glfw(key));
 		});
 		glfwSetWindowPosCallback(_window, [](GLFWwindow* windows, int x, int y){
 

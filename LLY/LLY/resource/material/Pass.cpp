@@ -37,6 +37,18 @@ namespace lly {
 		}
 	}
 
+	void Pass::draw(IndexBuffer* index)
+	{
+		RenderCommand* command = new RenderCommand;
+		if (command)
+		{
+			command->set_program(System::instance().get_resource_manager().get_program(_program));
+			command->set_index_buffer(index);
+			command->set_render_option(_option.to_render());
+			System::instance().add_render_command(command);
+		}
+	}
+
 	void Pass::merge_render_option(const RenderOption& option)
 	{
 		_option.merge(option);

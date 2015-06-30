@@ -2,6 +2,7 @@
 #include <png.h>
 #include <algorithm>
 #include "./loader/TGAlib.h"
+#include "../util/FuncUnitl.h"
 
 namespace lly {
 
@@ -68,6 +69,31 @@ namespace lly {
 
 
 		return true;
+	}
+
+	void Image::get_rgb(int x, int y, float& r, float& g, float&b)
+	{
+		int pixel_bytes = lly_util::to_color_bpp(_format) / sizeof(char);
+		if (x < 0 || x >= _width || y < 0 || y >= _height)
+			throw new std::logic_error("index out of range");
+
+		char * byte = _data.data() + (y * _width + x) * pixel_bytes;
+		switch (_format)
+		{
+		case ColorFormat::BGRA8888: r = (*(unsigned char*)byte + 2) / 255.0f; g = (*(unsigned char*)byte + 1) / 255.0f; b = (*(unsigned char*)byte) / 255.0f; break;
+		case ColorFormat::RGBA8888: r = (*(unsigned char*)byte) / 255.0f; g = (*(unsigned char*)byte + 1) / 255.0f; b = (*(unsigned char*)byte + 2) / 255.0f; break;
+		case ColorFormat::RG16: r = (*(unsigned short*)byte) / 65535.0f; g = (*(unsigned short*)byte + 2) / 65535.0f; break;
+		case ColorFormat::RG16F: break;
+		case ColorFormat::R32: r = (*(unsigned int*)byte) / (float)(0xFFFFFFFF); break;
+		case ColorFormat::R32F: break;
+		case ColorFormat::RGB888:  r = (*(unsigned char*)byte) / 255.0f; g = (*(unsigned char*)byte + 1) / 255.0f; b = (*(unsigned char*)byte + 2) / 255.0f; break;
+		case ColorFormat::RGB565: break;
+		case ColorFormat::A8: break;
+		case ColorFormat::I8: r = (*(unsigned char*)byte) / 255.0f; g = (*(unsigned char*)byte) / 255.0f; b = (*(unsigned char*)byte) / 255.0f; break;
+		case ColorFormat::AI88: r = (*(unsigned char*)byte + 1) / 255.0f; g = (*(unsigned char*)byte + 1) / 255.0f; b = (*(unsigned char*)byte + 1) / 255.0f;  break;
+		case ColorFormat::RGBA4444:  break;
+		case ColorFormat::RGB5A1:  break;
+		}
 	}
 
 	bool Image::load_from_jpg(unsigned char* data, int len)

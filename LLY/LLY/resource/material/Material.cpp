@@ -46,6 +46,12 @@ namespace lly {
 			_current_tech->draw(obj);
 	}
 
+	void Material::draw(IndexBuffer * index)
+	{
+		if (_current_tech)
+			_current_tech->draw(index);
+	}
+
 	void Material::merge_render_option()
 	{
 		for (auto& tech : _teches)

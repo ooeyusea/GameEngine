@@ -28,6 +28,15 @@ namespace lly {
 		}
 	}
 
+	bool IndexBuffer::create(int size)
+	{
+		glGenBuffers(1, &_vio);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _vio);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
+
+		return true;
+	}
+
 	bool IndexBuffer::load_indices(const char * data, int len)
 	{
 		glGenBuffers(1, &_vio);
@@ -35,6 +44,13 @@ namespace lly {
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, len, data, GL_STATIC_DRAW);
 
 		return true;
+	}
+
+	void IndexBuffer::update(const char * data, int len, int count)
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _vio);
+		glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, len, data);
+		_count = count;
 	}
 
 	bool IndexBuffer::gen(VertexBuffer * vertex_buffer, const VertexDescription& description)

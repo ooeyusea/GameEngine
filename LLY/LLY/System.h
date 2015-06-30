@@ -4,6 +4,7 @@
 #include <vector>
 #include "util/StringTable.h"
 #include "resource/ResourceManager.h"
+#include "input/Input.h"
 #include <glm/glm.hpp>
 
 namespace lly {
@@ -38,6 +39,7 @@ namespace lly {
 		void set_view_matrix(const glm::mat4& m);
 		void set_projection_matrix(const glm::mat4& m);
 		void set_eye(const glm::vec3& eye) { _eye = eye; }
+		const glm::vec3& get_eye() const { return _eye; }
 
 		const glm::mat4& get_model_matrix() const { return _model; }
 		const glm::mat4& get_view_matrix() const { return _view; }
@@ -65,6 +67,7 @@ namespace lly {
 		std::vector<LightingCommand*> _lighting_commands;
 		lly_util::StringTable _string_table;
 		ResourceManager _resource_manager;
+		Input _input;
 
 		glm::mat4 _model;
 		glm::mat4 _view;

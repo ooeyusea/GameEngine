@@ -1,6 +1,7 @@
 #ifndef CAMERA_H_
 #define CAMERA_H_
 #include "node.h"
+#include <list>
 
 namespace lly {
 	class RenderTarget;
@@ -12,6 +13,11 @@ namespace lly {
 		{
 			PERSPECTIVE = 1,
 			ORTHOGRAPHIC = 2
+		};
+
+		struct Listener
+		{
+			virtual void on_camera_changed(Camera * camera) = 0;
 		};
 
 		Camera();
@@ -56,7 +62,16 @@ namespace lly {
 
 		void update_projection();
 
+		virtual void on_changed() override;
+
 		virtual void add_to_scene(lly::Scene * scene) override;
+
+		void add_listener(Listener * listener) 
+		{ 
+			if (std::find(_listeners.begin(), _listeners.end(), listener) == _listeners.end())
+				_listeners.push_back(listener); 
+		}
+		void remove_listener(Listener * listener) { _listeners.remove(listener); }
 
 		void begin_render();
 
@@ -87,6 +102,7 @@ namespace lly {
 
 		RenderTarget * _target;
 		int _clear_flags;
+		std::list<Listener*> _listeners;
 	};
 }
 
